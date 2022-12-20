@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+namespace WebServCo\Log;
+
+use DateTimeImmutable;
+use Psr\Log\AbstractLogger;
+use Psr\Log\LoggerInterface;
+use Stringable;
+use WebServCo\LogContract\Context\ContextServiceInterface;
+use WebServCo\LogContract\Filesystem\FilesystemServiceInterface;
+
+use function sprintf;
+
+use const PHP_EOL;
+
+/**
+ * Log to file, with separate context information.
+ */
+final class ContextFileLogger extends AbstractLogger implements LoggerInterface
+{
+    public function __construct(
+        private string $channel,
+        private ContextServiceInterface $contextService,
+        private FilesystemServiceInterface $filesystemService,
+        private LevelService $levelService,
+    ) {
+    }
+
+    /**
+     * Main log action.
+     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @param mixed[] $context
+     * phpcs:enable
+     */
+    public function log(mixed $level, string|Stringable $message, array $context = []): void
+    {
+        $this->levelService->validateLevel($level);
+
+        $logId = $this->createLogId();
+
+        $contextResult = $this->handleContext($logId, $context);
+
+        $logPath = $this->filesystemService->getLogFilePath($this->channel);
+        $logData = sprintf(
+            // [logId] level message [context]
+            '[%s] %s %s%s%s',
+            $logId,
+            $this->levelService->toString($level),
+            (string) $message,
+            $contextResult ? ' [context]' : '',
+            PHP_EOL,
+        );
+
+        $this->filesystemService->write($logPath, $logData);
+    }
+
+    private function createLogId(): string
+    {
+        $date = new DateTimeImmutable();
+
+        return $date->format('Ymd.His.u');
+    }
+
+    /**
+     * Handle context logging.
+     *
+     * PSR allows anything in $context, so exceptionally, we use "mixed".
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @param mixed[] $context
+     * phpcs:enable
+     */
+    private function handleContext(string $logId, array $context = []): bool
+    {
+        if ($context === []) {
+            // Context is empty.
+            return false;
+        }
+
+        $contextPath = $this->filesystemService->getContextFilePath($this->channel, $logId);
+
+        $contextData = $this->contextService->toString($context);
+
+        return $this->filesystemService->write($contextPath, $contextData);
+    }
+}
