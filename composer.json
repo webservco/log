@@ -40,7 +40,10 @@
         "webservco/coding-standards": "@dev"
     },
     "require": {
-        "php" : "^8.1"
+        "php" : "^8.1",
+        "psr/log": "^3",
+        "webservco/log-contract" : "@dev"
+
     },
     "scripts": {
         "check:phan": "vendor/bin/phan --config-file vendor/webservco/coding-standards/phan/config.php",
