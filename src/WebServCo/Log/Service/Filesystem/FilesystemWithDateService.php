@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace WebServCo\Log\Filesystem;
+namespace WebServCo\Log\Service\Filesystem;
 
 use DateTimeImmutable;
-use RuntimeException;
-use WebServCo\LogContract\Filesystem\FilesystemServiceInterface;
+use OutOfBoundsException;
+use WebServCo\Log\Contract\Filesystem\FilesystemServiceInterface;
 
 use function file_put_contents;
 use function is_dir;
@@ -27,11 +27,11 @@ final class FilesystemWithDateService implements FilesystemServiceInterface
     public function __construct(private string $baseDirectoryPath)
     {
         if (!is_dir($baseDirectoryPath)) {
-            throw new RuntimeException('Base log directory path does not exist, or is not a directory.');
+            throw new OutOfBoundsException('Base log directory path does not exist, or is not a directory.');
         }
 
         if (!is_readable($baseDirectoryPath)) {
-            throw new RuntimeException('Base log directory path is not readable.');
+            throw new OutOfBoundsException('Base log directory path is not readable.');
         }
     }
 
@@ -64,12 +64,12 @@ final class FilesystemWithDateService implements FilesystemServiceInterface
         $directory = pathinfo($path, PATHINFO_DIRNAME);
         $dirResult = $this->createDirectoryIfNotExists($directory);
         if ($dirResult === false) {
-            throw new RuntimeException('Error creating log directory.');
+            throw new OutOfBoundsException('Error creating log directory.');
         }
 
         $fileResult = file_put_contents($path, $data, FILE_APPEND);
         if ($fileResult === false) {
-            throw new RuntimeException('Error writing log file.');
+            throw new OutOfBoundsException('Error writing log file.');
         }
 
         return true;

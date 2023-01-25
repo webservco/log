@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace WebServCo\Log;
+namespace WebServCo\Log\Service;
 
 use DateTimeImmutable;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
 use Stringable;
-use WebServCo\LogContract\Context\ContextServiceInterface;
-use WebServCo\LogContract\Filesystem\FilesystemServiceInterface;
+use WebServCo\Log\Contract\Context\ContextServiceInterface;
+use WebServCo\Log\Contract\Filesystem\FilesystemServiceInterface;
 
 use function sprintf;
 

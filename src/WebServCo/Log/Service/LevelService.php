@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WebServCo\Log;
+namespace WebServCo\Log\Service;
 
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LogLevel;

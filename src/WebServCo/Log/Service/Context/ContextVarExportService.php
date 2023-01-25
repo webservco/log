@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WebServCo\Log\Context;
+namespace WebServCo\Log\Service\Context;
 
-use WebServCo\LogContract\Context\ContextServiceInterface;
+use WebServCo\Log\Contract\Context\ContextServiceInterface;
 
 use function var_export;
 
