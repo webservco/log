@@ -42,8 +42,7 @@
     },
     "require": {
         "php" : "^8.1",
-        "psr/log": "^3",
-        "webservco/log-contract" : "@dev"
+        "psr/log": "^3"
 
     },
     "scripts": {
