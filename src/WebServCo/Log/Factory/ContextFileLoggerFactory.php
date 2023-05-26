@@ -16,8 +16,10 @@ use function is_writable;
 
 final class ContextFileLoggerFactory implements LoggerFactoryInterface
 {
-    public function __construct(private string $logDirectory)
+    private string $logDirectory;
+    public function __construct(string $logDirectory)
     {
+        $this->logDirectory = $logDirectory;
         if (!is_writable($logDirectory)) {
             throw new OutOfBoundsException('Log directory is not writable.');
         }

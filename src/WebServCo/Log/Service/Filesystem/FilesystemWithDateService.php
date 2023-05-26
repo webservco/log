@@ -24,8 +24,10 @@ use const PATHINFO_DIRNAME;
  */
 final class FilesystemWithDateService implements FilesystemServiceInterface
 {
-    public function __construct(private string $baseDirectoryPath)
+    private string $baseDirectoryPath;
+    public function __construct(string $baseDirectoryPath)
     {
+        $this->baseDirectoryPath = $baseDirectoryPath;
         if (!is_dir($baseDirectoryPath)) {
             throw new OutOfBoundsException('Base log directory path does not exist, or is not a directory.');
         }
