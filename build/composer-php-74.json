@@ -21,7 +21,7 @@
     "name" : "webservco/log",
     "require": {
         "php" : "^7.4",
-        "psr/log": "^3"
+        "psr/log": "^1"
 
     },
     "type" : "library"
