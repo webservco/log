@@ -13,6 +13,7 @@ use function is_dir;
 use function is_readable;
 use function mkdir;
 use function pathinfo;
+use function rtrim;
 use function sprintf;
 
 use const DIRECTORY_SEPARATOR;
@@ -26,11 +27,14 @@ final class FilesystemWithDateService implements FilesystemServiceInterface
 {
     public function __construct(private string $baseDirectoryPath)
     {
-        if (!is_dir($baseDirectoryPath)) {
+        // Make sure path contains trailing slash (trim + add back).
+        $this->baseDirectoryPath = rtrim($this->baseDirectoryPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        if (!is_dir($this->baseDirectoryPath)) {
             throw new OutOfBoundsException('Base log directory path does not exist, or is not a directory.');
         }
 
-        if (!is_readable($baseDirectoryPath)) {
+        if (!is_readable($this->baseDirectoryPath)) {
             throw new OutOfBoundsException('Base log directory path is not readable.');
         }
     }

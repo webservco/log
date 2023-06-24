@@ -13,12 +13,18 @@ use WebServCo\Log\Service\Filesystem\FilesystemWithDateService;
 use WebServCo\Log\Service\LevelService;
 
 use function is_writable;
+use function rtrim;
+
+use const DIRECTORY_SEPARATOR;
 
 final class ContextFileLoggerFactory implements LoggerFactoryInterface
 {
     public function __construct(private string $logDirectory)
     {
-        if (!is_writable($logDirectory)) {
+        // Make sure path contains trailing slash (trim + add back).
+        $this->logDirectory = rtrim($this->logDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        if (!is_writable($this->logDirectory)) {
             throw new OutOfBoundsException('Log directory is not writable.');
         }
     }
