@@ -16,7 +16,7 @@ final class ContextVarExportService implements ContextServiceInterface
      * Use case: write in a file.
      *
      * PSR allows anything in $context, so we use "mixed" as an exception.
-     * phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
      * @param array<int|string,mixed> $context
      */
     public function toString(array $context): string

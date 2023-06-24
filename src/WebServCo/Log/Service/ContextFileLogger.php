@@ -31,10 +31,10 @@ final class ContextFileLogger extends AbstractLogger implements LoggerInterface
     /**
      * Main log action.
      *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
      * @param mixed[] $context
-     * phpcs:enable
+     * @phpcs:enable
      */
     public function log(mixed $level, string|Stringable $message, array $context = []): void
     {
@@ -69,10 +69,10 @@ final class ContextFileLogger extends AbstractLogger implements LoggerInterface
      * Handle context logging.
      *
      * PSR allows anything in $context, so exceptionally, we use "mixed".
-     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
-     * phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
      * @param mixed[] $context
-     * phpcs:enable
+     * @phpcs:enable
      */
     private function handleContext(string $logId, array $context = []): bool
     {
