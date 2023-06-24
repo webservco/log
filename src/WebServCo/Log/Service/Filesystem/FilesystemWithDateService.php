@@ -25,8 +25,10 @@ use const PATHINFO_DIRNAME;
  */
 final class FilesystemWithDateService implements FilesystemServiceInterface
 {
-    public function __construct(private string $baseDirectoryPath)
+    private string $baseDirectoryPath;
+    public function __construct(string $baseDirectoryPath)
     {
+        $this->baseDirectoryPath = $baseDirectoryPath;
         // Make sure path contains trailing slash (trim + add back).
         $this->baseDirectoryPath = rtrim($this->baseDirectoryPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
