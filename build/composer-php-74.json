@@ -11,7 +11,7 @@
             "WebServCo\\" : "src/WebServCo/"
         }
     },
-    "description" : "A PHP component.",
+    "description" : "A PHP component/library.",
     "homepage" : "https://webserv.co",
     "keywords" : [
         "component",
