@@ -19,8 +19,10 @@ use const DIRECTORY_SEPARATOR;
 
 final class ContextFileLoggerFactory implements LoggerFactoryInterface
 {
-    public function __construct(private string $logDirectory)
+    private string $logDirectory;
+    public function __construct(string $logDirectory)
     {
+        $this->logDirectory = $logDirectory;
         // Make sure path contains trailing slash (trim + add back).
         $this->logDirectory = rtrim($this->logDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
