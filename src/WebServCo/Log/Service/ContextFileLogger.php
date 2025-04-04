@@ -20,12 +20,16 @@ use const PHP_EOL;
  */
 final class ContextFileLogger extends AbstractLogger implements LoggerInterface
 {
-    public function __construct(
-        private string $channel,
-        private ContextServiceInterface $contextService,
-        private FilesystemServiceInterface $filesystemService,
-        private LevelService $levelService,
-    ) {
+    private string $channel;
+    private ContextServiceInterface $contextService;
+    private FilesystemServiceInterface $filesystemService;
+    private LevelService $levelService;
+    public function __construct(string $channel, ContextServiceInterface $contextService, FilesystemServiceInterface $filesystemService, LevelService $levelService)
+    {
+        $this->channel = $channel;
+        $this->contextService = $contextService;
+        $this->filesystemService = $filesystemService;
+        $this->levelService = $levelService;
     }
 
     /**
@@ -35,8 +39,10 @@ final class ContextFileLogger extends AbstractLogger implements LoggerInterface
      * @phpcs:disable SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax
      * @param mixed[] $context
      * @phpcs:enable
+     * @param string|\Stringable $message
+     * @param mixed $level
      */
-    public function log(mixed $level, string|Stringable $message, array $context = []): void
+    public function log($level, $message, array $context = []): void
     {
         $this->levelService->validateLevel($level);
 
