@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Log\Service\Context;
 
+use Override;
 use WebServCo\Log\Contract\Context\ContextServiceInterface;
 
 use function var_export;
@@ -19,6 +20,7 @@ final class ContextVarExportService implements ContextServiceInterface
      * @phpcs:ignore SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint
      * @param array<int|string,mixed> $context
      */
+    #[Override]
     public function toString(array $context): string
     {
         return var_export($context, true);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Log\Factory;
 
 use OutOfBoundsException;
+use Override;
 use Psr\Log\LoggerInterface;
 use WebServCo\File\Service\File\FileService;
 use WebServCo\Log\Contract\LoggerFactoryInterface;
@@ -30,6 +31,7 @@ final class ContextFileLoggerFactory implements LoggerFactoryInterface
         }
     }
 
+    #[Override]
     public function createLogger(string $channel): LoggerInterface
     {
         return new ContextFileLogger(

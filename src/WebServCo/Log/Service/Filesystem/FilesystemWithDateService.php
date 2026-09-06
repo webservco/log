@@ -6,6 +6,7 @@ namespace WebServCo\Log\Service\Filesystem;
 
 use DateTimeImmutable;
 use OutOfBoundsException;
+use Override;
 use WebServCo\File\Service\File\FileService;
 use WebServCo\Log\Contract\Filesystem\FilesystemServiceInterface;
 
@@ -35,6 +36,7 @@ final class FilesystemWithDateService implements FilesystemServiceInterface
         }
     }
 
+    #[Override]
     public function getContextFilePath(string $channel, string $logId): string
     {
         return sprintf(
@@ -48,6 +50,7 @@ final class FilesystemWithDateService implements FilesystemServiceInterface
         );
     }
 
+    #[Override]
     public function getLogFilePath(string $channel): string
     {
         return sprintf(
@@ -59,6 +62,7 @@ final class FilesystemWithDateService implements FilesystemServiceInterface
         );
     }
 
+    #[Override]
     public function write(string $data, string $path): bool
     {
         return $this->fileService->writeDataToFilePath($data, $path);

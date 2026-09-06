@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Log\Service;
 
 use DateTimeImmutable;
+use Override;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
 use Stringable;
@@ -36,6 +37,7 @@ final class ContextFileLogger extends AbstractLogger implements LoggerInterface
      * @param mixed[] $context
      * @phpcs:enable
      */
+    #[Override]
     public function log(mixed $level, string|Stringable $message, array $context = []): void
     {
         $this->levelService->validateLevel($level);
