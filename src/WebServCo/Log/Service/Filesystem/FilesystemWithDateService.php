@@ -22,8 +22,12 @@ use const DIRECTORY_SEPARATOR;
  */
 final class FilesystemWithDateService implements FilesystemServiceInterface
 {
-    public function __construct(private string $baseDirectoryPath, private FileService $fileService)
+    private string $baseDirectoryPath;
+    private FileService $fileService;
+    public function __construct(string $baseDirectoryPath, FileService $fileService)
     {
+        $this->baseDirectoryPath = $baseDirectoryPath;
+        $this->fileService = $fileService;
         // Make sure path contains trailing slash (trim + add back).
         $this->baseDirectoryPath = rtrim($this->baseDirectoryPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 

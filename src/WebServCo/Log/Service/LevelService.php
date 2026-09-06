@@ -11,7 +11,10 @@ use function is_scalar;
 
 final class LevelService
 {
-    public function validateLevel(mixed $level): bool
+    /**
+     * @param mixed $level
+     */
+    public function validateLevel($level): bool
     {
         switch ($level) {
             // "System is unusable."
@@ -36,7 +39,10 @@ final class LevelService
         }
     }
 
-    public function toString(mixed $level): string
+    /**
+     * @param mixed $level
+     */
+    public function toString($level): string
     {
         if (is_scalar($level)) {
             return (string) $level;
