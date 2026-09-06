@@ -6,6 +6,7 @@ namespace WebServCo\Log\Factory;
 
 use OutOfBoundsException;
 use Psr\Log\LoggerInterface;
+use WebServCo\File\Service\File\FileService;
 use WebServCo\Log\Contract\LoggerFactoryInterface;
 use WebServCo\Log\Service\Context\ContextVarExportService;
 use WebServCo\Log\Service\ContextFileLogger;
@@ -34,7 +35,7 @@ final class ContextFileLoggerFactory implements LoggerFactoryInterface
         return new ContextFileLogger(
             $channel,
             new ContextVarExportService(),
-            new FilesystemWithDateService($this->logDirectory),
+            new FilesystemWithDateService($this->logDirectory, new FileService()),
             new LevelService(),
         );
     }

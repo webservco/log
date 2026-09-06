@@ -55,7 +55,7 @@ final class ContextFileLogger extends AbstractLogger implements LoggerInterface
             PHP_EOL,
         );
 
-        $this->filesystemService->write($logPath, $logData);
+        $this->filesystemService->write($logData, $logPath);
     }
 
     private function createLogId(): string
@@ -85,6 +85,6 @@ final class ContextFileLogger extends AbstractLogger implements LoggerInterface
 
         $contextData = $this->contextService->toString($context);
 
-        return $this->filesystemService->write($contextPath, $contextData);
+        return $this->filesystemService->write($contextData, $contextPath);
     }
 }

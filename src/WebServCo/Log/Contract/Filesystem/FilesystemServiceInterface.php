@@ -15,5 +15,5 @@ interface FilesystemServiceInterface
 
     public function getLogFilePath(string $channel): string;
 
-    public function write(string $path, string $data): bool;
+    public function write(string $data, string $path): bool;
 }

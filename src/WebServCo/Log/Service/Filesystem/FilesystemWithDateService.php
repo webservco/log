@@ -6,26 +6,22 @@ namespace WebServCo\Log\Service\Filesystem;
 
 use DateTimeImmutable;
 use OutOfBoundsException;
+use WebServCo\File\Service\File\FileService;
 use WebServCo\Log\Contract\Filesystem\FilesystemServiceInterface;
 
-use function file_put_contents;
 use function is_dir;
 use function is_readable;
-use function mkdir;
-use function pathinfo;
 use function rtrim;
 use function sprintf;
 
 use const DIRECTORY_SEPARATOR;
-use const FILE_APPEND;
-use const PATHINFO_DIRNAME;
 
 /**
  * Filesystem helper implementation using separate directories for each day.
  */
 final class FilesystemWithDateService implements FilesystemServiceInterface
 {
-    public function __construct(private string $baseDirectoryPath)
+    public function __construct(private string $baseDirectoryPath, private FileService $fileService)
     {
         // Make sure path contains trailing slash (trim + add back).
         $this->baseDirectoryPath = rtrim($this->baseDirectoryPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
@@ -63,37 +59,9 @@ final class FilesystemWithDateService implements FilesystemServiceInterface
         );
     }
 
-    public function write(string $path, string $data): bool
+    public function write(string $data, string $path): bool
     {
-        $directory = pathinfo($path, PATHINFO_DIRNAME);
-        $dirResult = $this->createDirectoryIfNotExists($directory);
-        if ($dirResult === false) {
-            throw new OutOfBoundsException('Error creating log directory.');
-        }
-
-        $fileResult = file_put_contents($path, $data, FILE_APPEND);
-        if ($fileResult === false) {
-            throw new OutOfBoundsException('Error writing log file.');
-        }
-
-        return true;
-    }
-
-    private function createDirectoryIfNotExists(string $directory): bool
-    {
-        if (is_dir($directory)) {
-            // Directory already exists.
-            return true;
-        }
-
-        return mkdir(
-            $directory,
-            // permissions
-            0775,
-            // recursive
-            true,
-            // context
-        );
+        return $this->fileService->writeDataToFilePath($data, $path);
     }
 
     private function getSubdirectoryName(): string

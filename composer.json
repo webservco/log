@@ -29,7 +29,8 @@
     },
     "require": {
         "php" : "^8.4",
-        "psr/log": "^3"
+        "psr/log": "^3",
+        "webservco/file": "^1"
     },
     "require-dev": {
         "pds/skeleton": "^1",
